@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sky.mybatis.mapper.GradeMapper">
+    <resultMap id="GradeResultMap" type="Grade">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+     </resultMap>
+
+     <sql id="Base_Column_List">
+         id,
+         name
+     </sql>
+     <select id="selectByPrimaryKey" resultMap="GradeResultMap" parameterType="java.lang.Integer">
+         SELECT
+         <include refid="Base_Column_List"/>
+         FROM Grade
+         WHERE id=#{id}
+     </select>
+
+    <select id="getGradesByTchId" resultMap="GradeResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM Grade
+        WHERE tchId=#{tchId}
+    </select>
+
+     <insert id="insertWithId" parameterType="Grade">
+         INSERT INTO Grade (<include refid="Base_Column_List"/>)
+         VALUES (#{id},#{name})
+     </insert>
+
+     <insert id="insert" parameterType="Grade" useGeneratedKeys="true" keyProperty="sid">
+         INSERT  INTO Grade(name,)
+         VALUES (#{name})
+     </insert>
+
+     <update id="update" parameterType="Grade" >
+         UPDATE Grade SET
+         name=#{name}
+         WHERE id=#{id}
+     </update>
+
+     <delete id="deleteByPrimaryKey" parameterType="int">
+         DELETE from Grade where id=#{id}
+     </delete>
+
+ </mapper>

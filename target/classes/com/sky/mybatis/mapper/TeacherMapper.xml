@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sky.mybatis.mapper.TeacherMapper">
+    <resultMap id="TeacherResultMap" type="Teacher">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="createDate" property="createDate" jdbcType="DATE"/>
+
+        <association property="school" column="schId" javaType="School"
+                     select="com.sky.mybatis.mapper.SchoolMapper.selectByPrimaryKey"/>
+
+        <collection property="grades" ofType="Grade" column="id"
+                    select="com.sky.mybatis.mapper.GradeMapper.getGradesByTchId"/>
+    </resultMap>
+
+    <resultMap id="SchoolResultMap" type="School">
+        <result column="id" property="sid" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+         id,
+         name,
+         createDate,
+         schId
+     </sql>
+    <select id="selectByPrimaryKey" resultMap="TeacherResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM Teacher
+        WHERE id=#{sid}
+    </select>
+
+    <insert id="insertWithId" parameterType="Teacher">
+        INSERT INTO Teacher (<include refid="Base_Column_List"/>)
+        VALUES (#{sid},#{name})
+    </insert>
+
+    <insert id="insert" parameterType="Teacher" useGeneratedKeys="true" keyProperty="sid">
+         INSERT  INTO Teacher(name,createDate,schId)
+         VALUES (#{name},#{createDate},#{school.sid})
+     </insert>
+
+    <update id="update" parameterType="Teacher">
+         UPDATE Teacher SET
+         name=#{name}
+         WHERE id=#{id}
+     </update>
+
+    <delete id="deleteByPrimaryKey" parameterType="int">
+         DELETE from Teacher where id=#{id}
+     </delete>
+</mapper>

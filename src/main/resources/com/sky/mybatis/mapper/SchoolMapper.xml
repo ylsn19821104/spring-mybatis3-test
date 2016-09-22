@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sky.mybatis.mapper.SchoolMapper">
+    <resultMap id="SchoolResultMap" type="School">
+        <result column="id" property="sid" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        name
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="SchoolResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM School
+        WHERE id=#{sid}
+    </select>
+
+    <insert id="insertWithId" parameterType="School">
+        INSERT INTO School (<include refid="Base_Column_List"/>)
+        VALUES (#{sid},#{name})
+    </insert>
+
+    <insert id="insert" parameterType="School" useGeneratedKeys="true" keyProperty="sid">
+        INSERT  INTO school(name)
+        VALUES (#{name})
+    </insert>
+
+    <update id="update" parameterType="School" >
+        UPDATE school SET
+        name=#{name}
+        WHERE id=#{sid}
+    </update>
+    
+    <delete id="deleteByPrimaryKey" parameterType="int">
+        DELETE from school where id=#{sid}
+    </delete>
+</mapper>
