@@ -1,7 +1,11 @@
+import com.sky.mybatis.entity.Address;
 import com.sky.mybatis.entity.School;
 import com.sky.mybatis.entity.Teacher;
+import com.sky.mybatis.entity.User;
+import com.sky.mybatis.mapper.AddressMapper;
 import com.sky.mybatis.mapper.SchoolMapper;
 import com.sky.mybatis.mapper.TeacherMapper;
+import com.sky.mybatis.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -13,6 +17,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -23,7 +28,7 @@ public class TestMain {
 
     @Before
     public void init() throws IOException {
-        String resource = "mybatis-config.xml";
+        String resource = "mybatis.xml";
         InputStream in = Resources.getResourceAsStream(resource);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(in);
         System.out.println(sqlSessionFactory.getConfiguration());
@@ -99,6 +104,65 @@ public class TestMain {
 
     }
 
+
+    @Test
+    public void testSelectAnnotation() {
+        SqlSession sqlSession = factory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = userMapper.selectWithAddress(205);
+        System.err.println("user: " + user);
+
+        List<User> users = userMapper.findAll();
+        System.out.println(users);
+        sqlSession.close();
+
+    }
+
+    @Test
+    public void testInsertAnnotation() {
+        SqlSession sqlSession = factory.openSession();
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+        User user = new User();
+        user.setCreated(new Date());
+        user.setName("mayun");
+        user.setSummary("alibaba");
+
+        userMapper.add(user);
+        System.err.println("user: " + user);
+
+        sqlSession.commit();
+        sqlSession.close();
+
+    }
+
+
+    @Test
+    public void testInsertAddressAnnotation() {
+        SqlSession sqlSession = factory.openSession();
+        AddressMapper addressMapper = sqlSession.getMapper(AddressMapper.class);
+        Address address = new Address();
+        address.setName("上海市浦东新区张江高科");
+
+        addressMapper.insert(address);
+
+        sqlSession.commit();
+        sqlSession.close();
+
+    }
+
+    @Test
+    public void testSelectAddressAnnotation() {
+        SqlSession sqlSession = factory.openSession();
+        AddressMapper addressMapper = sqlSession.getMapper(AddressMapper.class);
+        Address address = new Address();
+        address.setName("上海市浦东新区张江高科");
+
+        addressMapper.insert(address);
+
+        sqlSession.commit();
+        sqlSession.close();
+
+    }
 
     public String uuid() {
         return UUID.randomUUID().toString().replace("-", "");

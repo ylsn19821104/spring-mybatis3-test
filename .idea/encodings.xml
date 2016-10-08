@@ -2,13 +2,9 @@
 <project version="4">
   <component name="Encoding">
     <file url="jar://$MAVEN_REPOSITORY$/org/mybatis/mybatis/3.2.8/mybatis-3.2.8-sources.jar!/org/apache/ibatis/plugin/InterceptorChain.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/sky/mybatis/entity/Acct.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/sky/mybatis/entity/Cust.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/sky/mybatis/entity/User.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/sky/mybatis/entity/UserType.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/sky/mybatis/util/IdcardUtils.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/spring-common.xml" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/resources/spring-mybatis.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/spring-mybatis.xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/test/java/TestMain.java" charset="UTF-8" />
   </component>
